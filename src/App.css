@@ -22,8 +22,8 @@
   color: #527b87;
 }
 .app-container {
-  background-color: #ee9090; /* Set your desired background color */
-  padding: 20px; /* Add padding as needed */
+  background-color: #ee9090; 
+  padding: 20px; 
 }
 
 .searchBox {
@@ -47,7 +47,7 @@
 }
 
 .searchBox.hovered {
-  border-color: #007bff; /* Change border color on hover */
+  border-color: #007bff; 
 }
 
 .tableContainer {
@@ -169,4 +169,22 @@
   background-color: #f68686; 
 }
 
+.single-user-info {
+  text-align: center;
+  margin-top: 20px;
+}
 
+.single-user-info img {
+  width: 100px; 
+  height: 100px; 
+  border-radius: 50%; 
+  margin-bottom: 10px;
+}
+
+.single-user-info p {
+  margin: 5px 0;
+}
+
+.single-user-info a {
+  text-decoration: none
+}

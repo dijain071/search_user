@@ -1,9 +1,7 @@
-
-import React, { useState, useEffect } from "react";
-import './App.css';
+import React, { useState, useEffect, useCallback } from "react";
+import "./App.css";
 import SearchBox from "./SearchBox";
-import Loader from "./Loader"; 
-
+import Loader from "./Loader";
 
 function App() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -11,21 +9,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const delayDebounceFn = setTimeout(() => {
-      if (searchQuery.trim() !== "") {
-        fetchUsers();
-      } else {
-        setSearchResults([]);
-      }
-    }, 500);
-
-    return () => clearTimeout(delayDebounceFn);
-  }, [searchQuery]);
-
-  const fetchUsers = async () => {
-    setIsLoading(true);
-    setError(null);
+  const fetchUsers = useCallback(async () => {
     try {
       const response = await fetch(
         `https://api.github.com/search/users?q=${searchQuery}&sort=followers`
@@ -35,44 +19,81 @@ function App() {
       }
       const data = await response.json();
       setSearchResults(data.items);
+      setIsLoading(false);
     } catch (error) {
       console.error("Error fetching users:", error);
-      setError("Failed to fetch users. Please try again later.");
-    } finally {
+      setError("An error occurred. Please try again later.");
       setIsLoading(false);
     }
-  };
+  }, [searchQuery]);
 
+  useEffect(() => {
+    if (searchQuery.trim() !== "") {
+      setIsLoading(true);
+      const delayDebounceFn = setTimeout(() => {
+        fetchUsers();
+      }, 500);
+
+      return () => clearTimeout(delayDebounceFn);
+    } else {
+      setSearchResults([]);
+    }
+  }, [searchQuery, fetchUsers]);
+
+  const handleClearError = () => {
+    setError(null);
+  };
   return (
     <div className="app-container">
       <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
       {isLoading && <Loader />}
-      {error && <p>{error}</p>}
-      {searchQuery.trim() !== "" && searchResults.length > 0 && (
-        <div className="tableContainer">
-          <table>
-            <thead>
-              <tr>
-                <th>Sr. No. </th>
-                <th>User</th>
-                <th>Profile</th>
-              </tr>
-            </thead>
-            <tbody>
-              {searchResults.map((user, index) => (
-                <tr key={user.id}>
-                  <td>{index + 1}</td>
-                  <td>{user.login}</td>
-                  <td>
-                    <a href={user.html_url} target="_blank" rel="noopener noreferrer">{user.login}</a>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-
+      {error && (
+        <div className="error-message">
+          <p>{error}</p>
+          <button onClick={handleClearError}>Dismiss</button>
         </div>
       )}
+      {!isLoading &&
+        !error &&
+        searchQuery.trim() !== "" &&
+        searchResults.length > 0 && (
+          <>
+            {searchResults.length === 1 && (
+            <div className="single-user-info">
+              <img src={searchResults[0].avatar_url} alt="User Avatar" />
+              <p>User: {searchResults[0].login}</p>
+            </div>
+          )}
+            <div className="tableContainer">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Sr. No. </th>
+                    <th>User</th>
+                    <th>Profile</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {searchResults.map((user, index) => (
+                    <tr key={user.id}>
+                      <td>{index + 1}</td>
+                      <td>{user.login}</td>
+                      <td>
+                        <a
+                          href={user.html_url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {user.login}
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
     </div>
   );
 }
