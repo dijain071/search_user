@@ -7,12 +7,6 @@
   pointer-events: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -25,7 +19,92 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: #527b87;
+}
+.app-container {
+  background-color: #ee9090; /* Set your desired background color */
+  padding: 20px; /* Add padding as needed */
+}
+
+.searchBox {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.searchBox input {
+  border: none;
+  outline: none;
+  width: 100%;
+  padding: 8px;
+  font-size: 16px;
+}
+
+.searchBox.hovered {
+  border-color: #007bff; /* Change border color on hover */
+}
+
+.tableContainer {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+  transition: background-color 0.3s ease;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.tableContainer table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.tableContainer th,
+.tableContainer td {
+  padding: 12px;
+  text-align: left;
+}
+
+.tableContainer tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.tableContainer tbody tr:hover {
+  background-color: #cce5ff;
+}
+
+.tableContainer a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.tableContainer a:hover {
+  text-decoration: underline;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 @keyframes App-logo-spin {
@@ -36,3 +115,58 @@
     transform: rotate(360deg);
   }
 }
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 0, 0, 0.1);
+  border-left-color: #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.searchBox {
+  position: relative;
+}
+
+.clear-icon {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  border-radius: 50%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.clear-icon svg {
+  width: 12px;
+  height: 12px;
+  fill: #ffffff; 
+}
+
+.clear-icon:hover {
+  background-color: #f68686; 
+}
+
+
