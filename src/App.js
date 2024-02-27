@@ -44,26 +44,28 @@ function App() {
     setError(null);
   };
   return (
-    <div className="app-container">
-      <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
-      {isLoading && <Loader />}
-      {error && (
-        <div className="error-message">
-          <p>{error}</p>
-          <button onClick={handleClearError}>Dismiss</button>
-        </div>
-      )}
+    <>
+      <div className="app-container">
+        <SearchBox searchQuery={searchQuery} setSearchQuery={setSearchQuery} />
+        {isLoading && <Loader />}
+        {error && (
+          <div className="error-message">
+            <p>{error}</p>
+            <button onClick={handleClearError}>Dismiss</button>
+          </div>
+        )}
+      </div>
       {!isLoading &&
         !error &&
         searchQuery.trim() !== "" &&
         searchResults.length > 0 && (
           <>
             {searchResults.length === 1 && (
-            <div className="single-user-info">
-              <img src={searchResults[0].avatar_url} alt="User Avatar" />
-              <p>User: {searchResults[0].login}</p>
-            </div>
-          )}
+              <div className="single-user-info">
+                <img src={searchResults[0].avatar_url} alt="User Avatar" />
+                <p>User: {searchResults[0].login}</p>
+              </div>
+            )}
             <div className="tableContainer">
               <table>
                 <thead>
@@ -94,7 +96,7 @@ function App() {
             </div>
           </>
         )}
-    </div>
+    </>
   );
 }
 

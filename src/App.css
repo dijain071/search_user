@@ -75,14 +75,6 @@
   text-align: left;
 }
 
-.tableContainer tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
-.tableContainer tbody tr:hover {
-  background-color: #cce5ff;
-}
-
 .tableContainer a {
   color: #007bff;
   text-decoration: none;
